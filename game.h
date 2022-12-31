@@ -28,6 +28,9 @@ void Guess(std::unordered_map<dpp::snowflake, GameState> &games,
             dpp::snowflake user, 
             std::string guess);
 
+// Format the guess the users guess
+std::string ProcessGuess(std::string guess, GameState game);
+
 // Check if recieved guess was valid
 bool Validate(std::string guess, const std::unique_ptr<Dictionary> &dictionary);
 

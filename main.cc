@@ -39,8 +39,10 @@ int main() {
           // Represent game to user
           GameState state = games[user];
           bot.message_create(dpp::message(event.msg.channel_id, "------"));
+
           for (auto word: state.guesses)
             bot.message_create(dpp::message(event.msg.channel_id, word));
+
           bot.message_create(dpp::message(event.msg.channel_id, "------"));
         }
       } else {

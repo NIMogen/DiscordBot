@@ -7,14 +7,15 @@ std::unique_ptr<Dictionary> ReadDictionary(std::string filepath) {
     dict.insert(line);
   }
 
-  // A seg fault occurs if I try to insert into a unique_ptr,
-  // so dict is converted after it has been populated.
+  // A seg fault occurs if I try to insert into a unique_ptr.
+  // To get around this the dict is converted after it has been populated.
   std::unique_ptr<std::unordered_set<std::string>> ptr_dict(new std::unordered_set(std::move(dict)));
   return ptr_dict;
 }
 
 void InitGame(std::unordered_map<dpp::snowflake, GameState> &games,
-              const dpp::snowflake &user, const std::unique_ptr<Dictionary> &dictionary) {
+              const dpp::snowflake &user,
+              const std::unique_ptr<Dictionary> &dictionary) {
   GameState state;
     
   std::mt19937 gen(std::random_device{}());
@@ -25,12 +26,59 @@ void InitGame(std::unordered_map<dpp::snowflake, GameState> &games,
   games.insert({user, state});
 }
 
+// Check for the winner in here instead of elsewhere
 void Guess(std::unordered_map<dpp::snowflake, GameState> &games, 
-                  dpp::snowflake user, 
-                  std::string guess) {
+           dpp::snowflake user,
+           std::string guess) {
   GameState game = games[user];
-  game.guesses.push_back(guess);
+  std::string formatted_guess = ProcessGuess(guess, game);
+  game.guesses.push_back(formatted_guess);
   games[user] = game;
+}
+
+std::string ProcessGuess(std::string guess, GameState game) {
+  char correct = '#';
+  char present = '*';
+  char incorrect = '+';
+  char outline_char;
+  std::string formatted;
+  char buf[3][16]; // We are able to count on this having a fixed size
+
+  auto j = 0;
+  for (auto i = 0; i < guess.length(); i++) {
+    if (game.word[i] == guess[i]) {
+      outline_char = correct;
+    } else if (game.word[i] != guess[i] && game.word.find(guess[i]) != std::string::npos) {
+      outline_char = present;
+    } else {
+      outline_char = incorrect;
+    }
+
+    buf[0][j] = outline_char;
+    buf[0][j+1] = outline_char;
+    buf[0][j+2] = outline_char;
+
+    buf[1][j] = outline_char;
+    buf[1][j+1] = guess[i];
+    buf[1][j+2] = outline_char;
+
+    buf[2][j] = outline_char;
+    buf[2][j+1] = outline_char;
+    buf[2][j+2] = outline_char;
+
+    buf[0][15] = '\n';
+    buf[0][15] = '\n';
+    buf[0][15] = '\n';
+
+    j += 3;
+  }
+
+  for (auto row = 0; row < 3; row++) {
+    for (auto col = 0; col < 16; col++) {
+      formatted.push_back(buf[row][col]);
+    }
+  }
+  return formatted;
 }
 
 bool Validate(std::string guess, const std::unique_ptr<Dictionary> &dictionary) {
