@@ -1,5 +1,5 @@
 # DiscordBot
-A discord bot that plays wordle. I made this a while back for a class, and it could use some cleanup once I find the time. Uses the D++ Discord API library.
+A simple discord bot that plays wordle. I made this a while back for a class, but I'd like to clean it up once I find the time. Uses the D++ Discord API library.
 
 TODO:
-- Clean things up with a class (or classes)
+- Clean up code and reorganize into classes (a single class would probably be sufficient)
