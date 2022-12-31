@@ -53,7 +53,7 @@ std::string ProcessGuess(std::string guess, GameState game) {
     } else {
       outline_char = incorrect;
     }
-
+    // TODO: Turn this into a loop
     buf[0][j] = outline_char;
     buf[0][j+1] = outline_char;
     buf[0][j+2] = outline_char;
