@@ -15,7 +15,7 @@ int main() {
     std::cout << "Logged in as " << bot.me.username << "!\n";
   });
 
-	// Initialize the games map and the dictionary set
+// Initialize the games map and the dictionary set
   std::unordered_map<dpp::snowflake, GameState> games;
   std::unique_ptr<Dictionary> dictionary = ReadDictionary("sgb-words.txt");
   
@@ -50,7 +50,7 @@ int main() {
     }
     else if (event.msg.content == "!play") {
       bot.message_create(dpp::message(event.msg.channel_id, "Game has been started! Send !quit to quit."));
-			InitGame(games, user, dictionary);
+      InitGame(games, user, dictionary);
     }
   });
   bot.start(false);

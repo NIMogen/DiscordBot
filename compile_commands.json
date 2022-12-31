@@ -1,0 +1,28 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++17",
+      "-o",
+      "wordle_bot",
+      "main.cc"
+    ],
+    "directory": "/home/noah/Github/DiscordBot",
+    "file": "/home/noah/Github/DiscordBot/main.cc",
+    "output": "/home/noah/Github/DiscordBot/wordle_bot"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-c",
+      "-std=c++17",
+      "-o",
+      "wordle_bot",
+      "game.cc"
+    ],
+    "directory": "/home/noah/Github/DiscordBot",
+    "file": "/home/noah/Github/DiscordBot/game.cc",
+    "output": "/home/noah/Github/DiscordBot/wordle_bot"
+  }
+]
